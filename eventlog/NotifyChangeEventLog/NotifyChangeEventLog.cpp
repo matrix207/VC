@@ -29,7 +29,7 @@ HANDLE g_hResources = NULL;
 void wmain(void)
 {
 	HANDLE hEventLog = NULL;
-	HANDLE aWaitHandles[2];
+	HANDLE aWaitHandles[2] = {0};
 	DWORD status = ERROR_SUCCESS;
 	DWORD dwWaitReason = 0;
 	DWORD dwLastRecordNumber = 0;
