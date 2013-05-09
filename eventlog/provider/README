@@ -1,0 +1,17 @@
+http://msdn.microsoft.com/en-us/library/aa363680%28v=vs.85%29.aspx
+
+To compile the message text file, use the following command:
+
+C:\Program Files\Microsoft Visual Studio 8\Common7\Tools\Bin\mc.exe
+
+mc -U provider.mc
+
+To compile the resources that the message compiler generated, use the following command:
+
+rc provider.rc
+
+To create the resource-only DLL that contains the message table string resources, use the following command (you can run the command from a Visual Studio Command Prompt):
+
+C:\Program Files\Microsoft Visual Studio 8\VC\bin\link.exe
+
+link -dll -noentry provider.res
