@@ -8,6 +8,9 @@
  * History:
  *        2013-05-14  v1.01  Dennis  Create
  *        2013-05-15  v1.02  Dennis  Make it better
+ *        2013-05-21  v1.03  Dennis  Add thread to monitor event log. If user 
+ *                                   clear event log, function ReadEventLog will
+ *                                   fail, so restart all.
  *
  */
 
@@ -51,7 +54,23 @@ void StopEventLogMonitor(void)
 	g_enable_monitor = 0;
 }
 
+DWORD WINAPI StartEventLogMonitor(LPVOID lpParam)
+{
+	EventLogMonitor();
+	return 0;
+}
+
 void StartEventLogMonitor(void)
+{
+	while (1)
+	{
+		HANDLE hThr = CreateThread(0,0,StartEventLogMonitor,0,0,0);
+		WaitForSingleObject(hThr, INFINITE);
+		if (0 == g_enable_monitor) break;
+	}
+}
+
+void EventLogMonitor(void)
 {	
 	DWORD status = ERROR_SUCCESS;
 	DWORD dwWaitReason = 0;
